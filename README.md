@@ -14,14 +14,12 @@ venv\Scripts\activate.bat
 pip -r requirements.txt
 ```
 
-## Deployment
+## Deployment (WIP)
 
 ### Windows
 
 ```
-set FLASK_ENV=development
-set FLASK_APP=app.py
-flask run --host=0.0.0.0
+python wsgi.py
 ```
 
 ## Run
