@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Sign up{% endblock %}
+{% block body %}
+    {{ super() }}
+    <div>
+        <h3>Sign Up</h3>
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {{ messages[0] }}. Go to <a href="{{ url_for('home.login') }}">login page</a>.
+                </div>
+            {% endif %}
+            {% endwith %}
+            <form method="POST" action="/signup">
+                <div>
+                    <div>
+                        <input type="email" name="email" placeholder="Email" autofocus="">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input type="text" name="username" placeholder="Username" autofocus="">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <button>Sign Up</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <p><a href="{{ url_for('home.index') }}">Home</a></p>
+    </div>
+{% endblock %}

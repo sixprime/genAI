@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Error{% endblock %}
 {% block body %}
+    {{ super() }}
     <p>{{error}}</p>
     <p><a href="{{ url_for('home.index') }}">Home</a></p>
 {% endblock %}

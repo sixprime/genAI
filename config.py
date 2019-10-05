@@ -14,7 +14,6 @@ class Config(object):
     # Flask-SQLAlchemy configuration values
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SQLALCHEMY_ECHO = os.environ.get('FLASK_SQLALCHEMY_ECHO')
-    SQLALCHEMY_ENGINE_OPTIONS = os.environ.get('FLASK_SQLALCHEMY_ENGINE_OPTIONS')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopmentConfig(Config):
