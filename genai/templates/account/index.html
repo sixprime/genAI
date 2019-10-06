@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Account{% endblock %}
+{% block content %}
+    <div>
+        <p>Welcome {{ current_user }}!</p>
+        <p>Current subscription status : {% if not current_user.is_subscribed %}not {% endif %}subscribed!</p>
+        {% if not current_user.is_subscribed %}
+        <div>
+            You have 7 days of trial, then will be billed $9.99 CAD each month.
+        </div>
+        <button id="submit">Subscribe</button>
+        {% endif %}
+    </div>
+    <div>
+        <p><a href="{{ url_for('home.index') }}">Home</a><p>
+    </div>
+{% endblock %}

@@ -16,6 +16,12 @@ class Config(object):
     SQLALCHEMY_ECHO = os.environ.get('FLASK_SQLALCHEMY_ECHO')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Stripe
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+    STRIPE_SUBSCRIPTION_PLAN_ID = os.environ.get('STRIPE_SUBSCRIPTION_PLAN_ID')
+    DOMAIN = os.environ.get('DOMAIN')
+
 class DevelopmentConfig(Config):
     # Flask configuration values
     ENV = 'development'

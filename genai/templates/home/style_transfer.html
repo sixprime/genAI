@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Style transfer{% endblock %}
+{% block content %}
+    <div>
+        <h3>Style transfer</h3>
+        <div>
+            <label>Upload a picture:</label>
+            <input type="file" onchange="readURL(this);" accept="image/png, image/jpeg" />
+            <img id="user_picture" src="static/img/image_preview.jpg" alt="your image" />
+            <img id="style" src="static/img/monet.jpg" alt="style" />
+        </div>
+        <div>
+            <button id="style_transfer">Transfer style !</button>
+        </div>
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {{ messages[0] }}. Go <a href="{{ url_for('home.login') }}">home</a>.
+                </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <div>
+        <p><a href="{{ url_for('home.index') }}">Home</a></p>
+    </div>
+{% endblock %}

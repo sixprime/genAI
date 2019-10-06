@@ -16,6 +16,9 @@ def create_app():
         # Register blueprints
         from .views import home
         app.register_blueprint(home.blueprint)
+    
+        from .views import account
+        app.register_blueprint(account.blueprint)
 
         from .views import errors
         app.register_blueprint(errors.blueprint)
