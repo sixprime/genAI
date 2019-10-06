@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from genai.models import User
 from genai import db, login_manager
+import os
+import base64
 
 blueprint = Blueprint('home', __name__)
 
@@ -59,10 +62,40 @@ def logout():
     logout_user()
     return redirect(url_for('home.index'))
 
-@blueprint.route('/style_transfer')
+@blueprint.route('/style_transfer', methods=['GET', 'POST'])
 @login_required
 def style_transfer():
-    return render_template('home/style_transfer.html')
+    # Check if we are doing another style transfer operation
+    user_image = 'louvre.jpg'
+    base_directory = 'genai/static/output'
+    user_directory = '/' + current_user.email + '/'
+    directory = base_directory + user_directory
+    lock_file_path = directory + '_lock'
+    user_generated_image_file_path = 'static/output' + user_directory + 'generated_image.jpg'
+
+    is_locked = True if os.path.exists(lock_file_path) else False
+    has_user_generated_image = True if os.path.exists('genai/' + user_generated_image_file_path) else False
+
+    if request.method == 'POST' and not is_locked:
+        # First, save the user image
+        #data = request.get_json()
+        print(request)
+        #print(request.form['picture'])
+        #print(request.args.get('file'))
+        #print(data)
+        #if data is not None:
+            #img_data = data['img']
+            #b64_string += '=' * (-len(img_data) % 4)
+            #with open(directory + 'test.jpg', 'wb') as image:
+                #image.write(base64.decodebytes(b64_string.encode()))
+
+        # Then, tart the style transfer operation
+        #import subprocess
+        #command = "python neural_trans.py " + directory + " " + user_image + " >/dev/null 2>&1"
+        #subprocess.Popen(command, stdout=None, stderr=None, shell=True)
+        return render_template('home/style_transfer.html', is_locked=True, has_user_generated_image=False)
+
+    return render_template('home/style_transfer.html', is_locked=is_locked, has_user_generated_image=has_user_generated_image, generated_image=user_generated_image_file_path)
 
 @login_manager.user_loader
 def load_user(user_id):

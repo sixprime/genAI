@@ -9,18 +9,33 @@ from nst_utils import *
 import numpy as np
 import tensorflow as tf
 import imageio
+import sys
 
 #%matplotlib inline can only be used in ipython command line not in a python script
 #get_ipython().run_line_magic('matplotlib', 'inline') To be removed
 
 #Loading the pre-trained VGG weights (Model)
 
-model = load_vgg_model("imagenet-vgg-verydeep-19.mat")
-print(model)
+#model = load_vgg_model("imagenet-vgg-verydeep-19.mat")
+#print(model)
 
 # here read the content image  and show it for verification
-content_image = imageio.imread("louvre.jpg")
-imshow(content_image)
+output_folder = sys.argv[1]
+print(output_folder)
+user_image = sys.argv[2]
+print(user_image)
+lock_filepath = output_folder + '_lock'
+print(lock_filepath)
+
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
+lock = open(lock_filepath, "w+")
+lock.close()
+
+#user_image = "louvre.jpg"
+#content_image = imageio.imread(user_image)
+#imshow(content_image)
 
 # Calculating the cost or error of the activations
 
@@ -61,8 +76,8 @@ with tf.Session() as test:
 
 #Now time to calculate the cost of the Style activatiosn
 
-style_image = imageio.imread("monet.jpg")
-imshow(style_image)
+#style_image = imageio.imread("monet.jpg")
+#imshow(style_image)
 
 def gram_matrix(A):
     """
@@ -214,7 +229,7 @@ tf.reset_default_graph()
 sess = tf.InteractiveSession()
 
 #Loading the images
-content_image = imageio.imread("louvre.jpg")
+content_image = imageio.imread(user_image)
 content_image = reshape_and_normalize_image(content_image)
 
 style_image = imageio.imread("monet.jpg")
@@ -262,7 +277,7 @@ train_step = optimizer.minimize(J)
 
 # here where the TF magic happens for image generation
 
-def model_nn(sess, input_image, num_iterations = 200):
+def model_nn(sess, input_image, num_iterations = 100):
 
     # Initialize global variables (you need to run the session on the initializer)
 
@@ -289,17 +304,20 @@ def model_nn(sess, input_image, num_iterations = 200):
         # Print every 20 iteration.
         if i%20 == 0:
             Jt, Jc, Js = sess.run([J, J_content, J_style])
-            print("Iteration " + str(i) + " :")
-            print("total cost = " + str(Jt))
-            print("content cost = " + str(Jc))
-            print("style cost = " + str(Js))
+            #print("Iteration " + str(i) + " :")
+            #print("total cost = " + str(Jt))
+            #print("content cost = " + str(Jc))
+            #print("style cost = " + str(Js))
 
             # save current generated image in the "/output" directory
-            save_image("output/" + str(i) + ".png", generated_image)
+            #save_image("output/" + str(i) + ".png", generated_image)
 
     # save last generated image
-    save_image('generated_image.jpg', generated_image)
+    save_image(output_folder + 'generated_image.jpg', generated_image)
 
     return generated_image
 
 model_nn(sess, content_image)
+
+if os.path.exists(lock_filepath):
+    os.remove(lock_filepath)

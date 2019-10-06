@@ -10,16 +10,20 @@
             <img id="style" src="static/img/monet.jpg" alt="style" />
         </div>
         <div>
-            <button id="style_transfer">Transfer style !</button>
+            <button id="style_transfer" {% if is_locked %}disabled{% endif %}>Transfer style !</button>
         </div>
         <div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div>
-                    {{ messages[0] }}. Go <a href="{{ url_for('home.login') }}">home</a>.
-                </div>
+            {% if is_locked %}
+            <p>You already have a style transfer in progress, please check later.</p>
+            {% else %}
+            <span id='result'></span>
             {% endif %}
-            {% endwith %}
+        </div>
+        <div>
+            {% if has_user_generated_image %}
+            <P>Generated picture : </P>
+            <img id="user_picture_result" src="{{ generated_image }}" alt="result image" />
+            {% endif %}
         </div>
     </div>
     <div>
