@@ -2,6 +2,7 @@
 {% block title %}Account{% endblock %}
 {% block content %}
     <div>
+        <h3>Account</h3>
         <p>Welcome {{ current_user }}!</p>
         <p>Current subscription status : {% if not current_user.is_subscribed %}not {% endif %}subscribed!</p>
         {% if not current_user.is_subscribed %}
