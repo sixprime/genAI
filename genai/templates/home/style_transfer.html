@@ -5,9 +5,9 @@
         <h3>Style transfer</h3>
         <div>
             <label>Upload a picture:</label>
-            <input type="file" onchange="readURL(this);" accept="image/png, image/jpeg" />
+            <input type="file" onchange="readURL(this);" accept="image/jpeg" />
             <img id="user_picture" src="static/img/image_preview.jpg" alt="your image" />
-            <img id="style" src="static/img/monet.jpg" alt="style" />
+            <img id="style" src="static/img/starry_night.jpg" alt="style" />
         </div>
         <div>
             <button id="style_transfer" {% if is_locked %}disabled{% endif %}>Transfer style !</button>

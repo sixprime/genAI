@@ -21,17 +21,10 @@ import sys
 
 # here read the content image  and show it for verification
 output_folder = sys.argv[1]
-print(output_folder)
 user_image = sys.argv[2]
-print(user_image)
-lock_filepath = output_folder + '_lock'
-print(lock_filepath)
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
-
-lock = open(lock_filepath, "w+")
-lock.close()
 
 #user_image = "louvre.jpg"
 #content_image = imageio.imread(user_image)
@@ -232,7 +225,7 @@ sess = tf.InteractiveSession()
 content_image = imageio.imread(user_image)
 content_image = reshape_and_normalize_image(content_image)
 
-style_image = imageio.imread("monet.jpg")
+style_image = imageio.imread("starry_night.jpg")
 style_image = reshape_and_normalize_image(style_image)
 
 generated_image = generate_noise_image(content_image)
@@ -277,7 +270,7 @@ train_step = optimizer.minimize(J)
 
 # here where the TF magic happens for image generation
 
-def model_nn(sess, input_image, num_iterations = 100):
+def model_nn(sess, input_image, num_iterations = 200):
 
     # Initialize global variables (you need to run the session on the initializer)
 
@@ -319,5 +312,5 @@ def model_nn(sess, input_image, num_iterations = 100):
 
 model_nn(sess, content_image)
 
-if os.path.exists(lock_filepath):
-    os.remove(lock_filepath)
+if os.path.exists(user_image):
+    os.remove(user_image)

@@ -5,15 +5,15 @@ function readURL(input) {
         reader.onload = function (e) {
             $('#user_picture')
                 .attr('src', e.target.result)
-                .width(400)
-                .height(300);
+                .width(640)
+                .height(480);
         };
 
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-function base64ToBlob(base64, mime) 
+/*function base64ToBlob(base64, mime) 
 {
     mime = mime || '';
     var sliceSize = 1024;
@@ -29,12 +29,11 @@ function base64ToBlob(base64, mime)
         }
 
         var byteArray = new Uint8Array(byteNumbers);
-
         byteArrays.push(byteArray);
     }
 
     return new Blob(byteArrays, {type: mime});
-}
+}*/
 
 var startStyleTransferTask = function () {
     var image = $('#user_picture').attr('src');
@@ -43,19 +42,15 @@ var startStyleTransferTask = function () {
         return
     }
 
-    var base64ImageContent = image.replace(/^data:image\/jpeg;base64,/, "");
-    var blob = base64ToBlob(base64ImageContent, 'image/jpeg');
-    var formData = new FormData();
-    alert(blob)
-    formData.append('picture', blob);
+    var image = image.replace(/^data:image\/jpeg;base64,/, "");
 
     $.ajax({
         url: '/style_transfer',
         type: 'POST',
         cache: false,
-        contentType: false,
         processData: false,
-        data: formData
+        contentType: 'application/json',
+        data: image
     })
     .done(function(data) {
         $('#result').text('Task started! Check back in a few minutes!');

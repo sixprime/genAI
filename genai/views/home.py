@@ -6,6 +6,7 @@ from genai.models import User
 from genai import db, login_manager
 import os
 import base64
+from PIL import Image
 
 blueprint = Blueprint('home', __name__)
 
@@ -66,7 +67,6 @@ def logout():
 @login_required
 def style_transfer():
     # Check if we are doing another style transfer operation
-    user_image = 'louvre.jpg'
     base_directory = 'genai/static/output'
     user_directory = '/' + current_user.email + '/'
     directory = base_directory + user_directory
@@ -77,22 +77,26 @@ def style_transfer():
     has_user_generated_image = True if os.path.exists('genai/' + user_generated_image_file_path) else False
 
     if request.method == 'POST' and not is_locked:
-        # First, save the user image
-        #data = request.get_json()
-        print(request)
-        #print(request.form['picture'])
-        #print(request.args.get('file'))
-        #print(data)
-        #if data is not None:
-            #img_data = data['img']
-            #b64_string += '=' * (-len(img_data) % 4)
-            #with open(directory + 'test.jpg', 'wb') as image:
-                #image.write(base64.decodebytes(b64_string.encode()))
+        # First, save the user image as a '_lock' file
+        user_image = request.get_data(cache=False, as_text=False, parse_form_data=True)
+        if user_image:
+            lock_image = directory + '_lock'
+            lock_image_jpeg = lock_image + '.jpeg'
+            # Write image to disk
+            with open(lock_image, 'wb') as image:
+                image.write(base64.decodebytes(user_image))
+            # Resize image to 640, 480 (same size as style)
+            if (os.path.exists(lock_image)):
+                os.rename(lock_image, lock_image_jpeg)
+                img = Image.open(lock_image_jpeg)
+                img = img.resize((640, 480), Image.BILINEAR)
+                img.save(lock_image_jpeg)
+                os.rename(lock_image_jpeg, lock_image)
 
-        # Then, tart the style transfer operation
-        #import subprocess
-        #command = "python neural_trans.py " + directory + " " + user_image + " >/dev/null 2>&1"
-        #subprocess.Popen(command, stdout=None, stderr=None, shell=True)
+        # Then, start the style transfer operation
+        import subprocess
+        command = "python neural_trans.py " + directory + " " + lock_file_path + " >/dev/null 2>&1"
+        subprocess.Popen(command, stdout=None, stderr=None, shell=True)
         return render_template('home/style_transfer.html', is_locked=True, has_user_generated_image=False)
 
     return render_template('home/style_transfer.html', is_locked=is_locked, has_user_generated_image=has_user_generated_image, generated_image=user_generated_image_file_path)
