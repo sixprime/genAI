@@ -77,7 +77,10 @@ def style_transfer():
     has_user_generated_image = True if os.path.exists('genai/' + user_generated_image_file_path) else False
 
     if request.method == 'POST' and not is_locked:
-        # First, save the user image as a '_lock' file
+        # First, create physical structure
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        # Then, save the user image as a '_lock' file
         user_image = request.get_data(cache=False, as_text=False, parse_form_data=True)
         if user_image:
             lock_image = directory + '_lock'
@@ -93,7 +96,7 @@ def style_transfer():
                 img.save(lock_image_jpeg)
                 os.rename(lock_image_jpeg, lock_image)
 
-        # Then, start the style transfer operation
+        # Finally, start the style transfer operation
         import subprocess
         command = "python neural_trans.py " + directory + " " + lock_file_path + " >/dev/null 2>&1"
         subprocess.Popen(command, stdout=None, stderr=None, shell=True)
