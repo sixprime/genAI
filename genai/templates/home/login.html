@@ -1,38 +1,27 @@
 {% extends "layout.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}InstaStyle - Login{% endblock %}
 {% block content %}
-    <div>
-        <h3>Login</h3>
+    <div class="text-center my-5">
         <div>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div>
+                <div class="alert alert-danger mt-5" role="alert">
                     {{ messages[0] }}
                 </div>
             {% endif %}
             {% endwith %}
-            <form method="POST" action="/login">
-                <div>
-                    <div>
-                        <input type="email" name="email" placeholder="Your Email" autofocus="">
-                    </div>
+            <form class="form-login" method="POST" action="/login">
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
                 </div>
-                <div>
-                    <div>
-                        <input type="password" name="password" placeholder="Your Password">
-                    </div>
-                </div>
-                <div>
-                    <label>
-                        <input type="checkbox">
-                        Remember me
-                    </label>
-                </div>
-                <button>Login</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
             </form>
         </div>
-    </div>
-    <div>
-        <p><a href="{{ url_for('home.index') }}">Home</a></p>
     </div>
 {% endblock %}

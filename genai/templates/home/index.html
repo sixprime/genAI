@@ -1,22 +1,21 @@
 {% extends "layout.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}InstaStyle - Home{% endblock %}
 {% block content %}
-    <div>
-        <h3>Home</h3>
+    <p class="text-center display-4 my-5">Your image is inspired by art!</p>
+    <p class="lead my-5">  Neural style transfer is an optimization technique used to take three images,
+    a content image, a style reference image (such as an artwork by a famous painter), and the
+    input image you want to style — and blend them together such that the input image is
+    transformed to look like the content image, but “painted” in the style of the style image.</p>
+    <div class="text-center mt-5">
+        <img src="static/img/f1car.jpg" class="d-inline-block" alt="">
+        <img src="static/img/plus.jpg" width="64" height="64" class="d-inline-block mx-4 my-4" alt="">
+        <img src="static/img/style.jpg" class="d-inline-block" alt="">
     </div>
-    <div>
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('account.index') }}">Account</a>
-        {% if current_user.is_subscribed %}
-        <a href="{{ url_for('home.style_transfer') }}">Style Transfer</a>
-        {% endif %}
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="{{ url_for('home.signup') }}">Sign up</a>
-        <a href="{{ url_for('home.login') }}">Login</a>
-        {% endif %}
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('home.logout') }}">Logout</a>
-        {% endif %}
+    <div class="text-center my-4">
+        <img src="static/img/equal.jpg" width="64" height="64" class="d-inline-block" alt="">
     </div>
+    <div class="text-center my-4">
+        <img src="static/img/f1carstylized.jpg" class="d-inline-block" alt="">
+    </div>
+    <p class="lead text-center my-5"><b>InstaStyle</b> allows YOU to stylize your pictures for an amazing result !</p>
 {% endblock %}

@@ -1,32 +1,35 @@
 {% extends "layout.html" %}
-{% block title %}Style transfer{% endblock %}
+{% block title %}InstaStyle - Style Transfer{% endblock %}
 {% block content %}
-    <div>
-        <h3>Style transfer</h3>
+    <div class="text-center my-5">
         <div>
-            <label>Upload a picture:</label>
-            <input type="file" onchange="readURL(this);" accept="image/jpeg" />
-            <img id="user_picture" src="static/img/image_preview.jpg" alt="your image" />
-            <img id="style" src="static/img/starry_night.jpg" alt="style" />
-        </div>
-        <div>
-            <button id="style_transfer" {% if is_locked %}disabled{% endif %}>Transfer style !</button>
+            <span class="d-block p-2">
+                <input type="file" onchange="readURL(this);" accept="image/jpeg" />
+            </span>
+            <span class="d-block p-2">
+                <img id="user_picture" class="d-inline-block" width="362" height="272" src="static/img/image_preview.jpg" alt="your image" />
+            </span>
+            <span class="d-block p-2">
+                <img id="style" class="d-inline-block" width="362" height="272" src="static/img/starry_night.jpg" alt="style" />
+            </span>
+            <span class="d-block p-2">
+                <button id="style_transfer" class="btn btn-primary btn-lg my-5" {% if is_locked %}disabled{% endif %}>Transfer style !</button>
+            </span>
         </div>
         <div>
             {% if is_locked %}
-            <p>You already have a style transfer in progress, please check later.</p>
+            <div class="alert alert-warning" role="alert">
+                You already have a style transfer in progress, please check later.
+            </div>
             {% else %}
-            <span id='result'></span>
+            <span id="result"></span>
             {% endif %}
         </div>
         <div>
             {% if has_user_generated_image %}
-            <P>Generated picture : </P>
-            <img id="user_picture_result" src="{{ generated_image }}" alt="result image" />
+            <p>Result</p>
+            <img id="user_picture_result" src="{{ generated_image }}" class="d-inline-block" width="362" height="272" alt="result image" />
             {% endif %}
         </div>
-    </div>
-    <div>
-        <p><a href="{{ url_for('home.index') }}">Home</a></p>
     </div>
 {% endblock %}

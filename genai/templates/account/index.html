@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
-{% block title %}Account{% endblock %}
+{% block title %}InstaStyle - Account{% endblock %}
 {% block content %}
     <div>
-        <h3>Account</h3>
-        <p>Welcome {{ current_user }}!</p>
-        <p>Current subscription status : {% if not current_user.is_subscribed %}not {% endif %}subscribed!</p>
+        <h4 class="text-center my-5">Welcome {{ current_user }}!</h4>
+        <p class="lead">Current subscription status :
+            {% if current_user.is_subscribed %}
+            <span class="badge badge-success">subscribed!</span>
+            {% else %}
+            <span class="badge badge-danger">not subscribed!</span>
+            {% endif %}
+        </p>
         {% if not current_user.is_subscribed %}
-        <div>
-            You have 7 days of trial, then will be billed $9.99 CAD each month.
-        </div>
-        <button id="submit">Subscribe</button>
+        <p class="d-inline-block">
+            After 7 days of trial, you will be billed $9.99 CAD each month.
+        </p>
+        <button id="submit" type="button" class="btn btn-primary">Subscribe</button>
         {% endif %}
-    </div>
-    <div>
-        <p><a href="{{ url_for('home.index') }}">Home</a><p>
     </div>
 {% endblock %}
