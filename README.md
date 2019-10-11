@@ -31,6 +31,9 @@ _Your image is inspired by art!_
 
 ### Windows
 
+1 - Download Kaggle model at `https://www.kaggle.com/teksab/imagenetvggverydeep19mat`
+
+2 - Install project
 ```
 python -m venv venv
 venv\Scripts\activate.bat
