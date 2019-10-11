@@ -24,9 +24,6 @@ _Your image is inspired by art!_
 <p align="center">Account / Subscribed</p>
 <p align="center"><img width="640" height="315" src="https://i.gyazo.com/21484077b79442c467e7f4b6715bbf15.png" alt="" /></p>
 
-<p align="center">Account / Unsubscribed</p>
-<p align="center"><img width="640" height="315" src="https://i.gyazo.com/3bb544f953374e30b37bc4a0b50934c4.png" alt="" /></p>
-
 <p align="center">Style transfer</p>
 <p align="center"><img width="640" height="605" src="https://i.gyazo.com/f25bcc9d688ce7b5d61950e55fe374b6.png" alt="" /></p>
 
