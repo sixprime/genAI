@@ -1,4 +1,4 @@
-# InstaStyle
+# InstaStyle (MVP)
 
 Premium style transfer website.
 
